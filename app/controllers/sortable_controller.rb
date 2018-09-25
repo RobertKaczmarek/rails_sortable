@@ -4,7 +4,7 @@ class SortableController < ApplicationController
   #
   def reorder
     ActiveRecord::Base.transaction do
-      params['rails_sortable'].each_with_index do |klass_to_id, new_sort|
+      params['rails_sortable'].each.with_index(1) do |klass_to_id, new_sort|
         model = find_model(klass_to_id)
         current_sort = model.read_attribute(model.class.sort_attribute)
         model.update_sort!(new_sort) if current_sort != new_sort
